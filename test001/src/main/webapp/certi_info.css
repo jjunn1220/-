@@ -1,0 +1,145 @@
+body{
+    background-color : white;
+}
+
+a{
+  text-decoration: none !important;
+  color:#7c5214 !important;
+}
+
+#wrapper {
+    position :relative;
+    margin:auto;
+    width: 1000px;
+    flex-direction: column;
+}
+
+#main_row1{
+    display :flex;
+    flex-direction :row;
+    flex-basis : auto;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+    .logo{
+        position:relative;
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        margin-left:10%;
+        margin-right: 3%;
+    }
+
+    .search {
+        position: relative;
+    }
+
+        .input {
+            position: relative;
+            width: 400px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 5%;
+            font-size: 14px;
+        }
+
+        .searchpic {
+            position : absolute;
+            width: 3%;
+            right: 3%;
+            margin-top:8%
+        }
+
+    .main_btn{
+      margin:auto;
+    }
+    .login_btn{
+      text-align:center;
+      margin:auto;
+      background-color: white;
+      color:#7c5214;
+      border-radius:5px !important;
+      border:1px solid #7c5214 !important;
+      font-size:1em;
+    }
+
+
+.bg-white{
+	margin-bottom: 1em;
+	border-bottom: solid 1px #74613F;
+}
+
+
+.navbar-nav > li{
+	text-align: center;
+	width:33%;
+}
+
+
+/* 여어어어ㅓㅇ기이이이ㅣ이까지 상다아아아아안바ㅏ아아아아ㅏ아ㅏㅏㅏㅏ아ㅏ아앙*/
+
+#certi_info {
+    margin:auto;
+    margin-top:1em;
+    width:90%;
+    height:fill;
+    border:1px solid #74613F;
+    pedding-top:3em;
+}
+
+#cer_name{
+    padding:5px 10px;
+    color:#5c3a07;
+    font-weight: bold;
+}
+
+#certi_list{
+    border-collapse:separate;
+    border-spacing:3em 2em;
+    margin:auto; 
+}
+
+     
+#title{
+    width:15%;
+    background-color:skyblue;
+    font-size: large;
+    color: #5c3a07;
+	background-color: white;
+    padding-left:10px;
+    font-weight:bold;
+}
+
+#mypage_potbtn{
+    display:block;
+    margin:auto;
+    padding:10px;
+    background-color: #7c5214;
+    color:white;
+    border-radius:5px;
+    border:1px solid white;
+}
+
+.logo_box{
+    width:30%;
+}
+    .logo img{
+        width:140px;
+        height: 80px;
+        border:0 white;
+        padding:0;
+        overflow:hidden;
+        position:relative;
+    }
+
+    .logo{
+        display:flex;
+        width:140px;
+        height: 80px;
+        position:relative;
+        border:white;
+        margin:auto;
+        background-color: white;
+    }

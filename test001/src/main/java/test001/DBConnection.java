@@ -1,0 +1,606 @@
+package test001;
+
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.sql.CallableStatement;
+
+public class DBConnection {
+	static String User = null;
+	static Connection conn = null;
+	public static void DBConnection() {
+	 
+	    String url = "jdbc:mysql://127.0.0.1:3306/sakila";
+	    String user_name = "root"; //  MySQL 서버 아이디
+	    String password = "1234"; // MySQL 서버 비밀번호
+	 
+	    // 1.드라이버 로딩
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	    } catch (ClassNotFoundException e) {
+	        System.err.println(" !! <JDBC 오류> Driver load 오류: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	 
+	    // 2.연결
+	    try {
+	        conn = DriverManager.getConnection(url, user_name, password);
+	        System.out.println("정상적으로 연결되었습니다.");
+	    } catch(SQLException e) {
+	        System.err.println("con 오류:" + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
+	public String get_UserID() {
+		return User;
+	}
+	//회원DB에 값 삽입
+	public int signup(User user) throws SQLException {
+		DBConnection();
+		int result = 0;	
+		PreparedStatement pstmt = null;
+			
+		try {
+			String sql = "insert into 회원 values(?,?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, user.getId());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getName());
+			pstmt.setString(4, user.getYear() + "." + user.getMonth() + "." + user.getDay());
+			pstmt.setString(5, user.getFr() + "-" + user.getSe() + "-" + user.getTh());
+			pstmt.setString(6, user.getEmail());
+			pstmt.setString(7, user.getMajor());
+			
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
+			insertPopol(user.getId());
+			
+		}
+		catch(SQLException e){
+			System.out.println("회원가입 삽입 오류");
+	        System.err.println (e.getMessage());
+		}
+		return result;
+	}
+	
+	//회원 가입할 경우에 포폴 디비가 추가되도록 만들어준다.
+	public void insertPopol(String UserId) throws SQLException {
+		DBConnection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		int n = 0;
+		String sql = "SELECT * FROM 포트폴리오";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				n = rs.getInt(1);
+			}
+			n=n+1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		
+		PreparedStatement pstmt = null;
+		String price = "";
+		String intro = "";
+		String certificate = "";
+		
+		try {
+			sql = "insert into 포트폴리오 values(?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, n);
+			pstmt.setString(2, price);
+			pstmt.setString(3, certificate);
+			pstmt.setString(4, intro);
+			pstmt.setString(5, UserId);
+
+			pstmt.executeUpdate();
+			
+		}
+		catch(SQLException e){
+			System.out.println("포트폴리오 삽입 오류");
+	        System.err.println (e.getMessage());
+		}
+		
+		pstmt.close();
+		conn.close();
+		
+	}
+	
+	//로그인을 위해 회원 싹 돌리기
+	public int login_DB(login login) throws SQLException {
+		DBConnection();
+		int result = 0;
+		String sql = "SELECT * FROM 회원";
+		
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			System.out.println("로그인 됨");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				String id = rs.getString(1);
+				if(id.equals(login.getLoginid())) {
+					if(rs.getString(2).equals(login.getLoginpw())) {
+						User = id;
+						result = 1;
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		return result;
+	}
+	
+	//게시글 삽입
+	public int feedAdd_DB(feddAdd feedAdd, String userId) throws SQLException {
+		DBConnection();
+		int result = 0;
+		
+		int number = 0;
+		String sql = "SELECT * FROM 커뮤니티";
+		
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				number = rs.getInt(1) + 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		
+		LocalDate now = LocalDate.now();
+		String date = String.valueOf(now);
+		
+		PreparedStatement pstmt = null;
+			
+		try {
+			sql = "insert into 커뮤니티 values(?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, number);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, feedAdd.getTitle());
+			pstmt.setString(4, feedAdd.getContentbox());
+			pstmt.setString(5, date);
+			pstmt.setInt(6, 0);
+			
+			result = pstmt.executeUpdate();
+			
+		}
+		catch(SQLException e){
+			System.out.println("커뮤니티 삽입 오류");
+	        System.err.println (e.getMessage());
+		}
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
+	//글 목록 가져오기
+	public  ArrayList<feedList> getList() throws SQLException{
+		DBConnection();
+		
+		String sql = "SELECT * FROM 커뮤니티";
+		ArrayList<feedList> list = new ArrayList<feedList>();
+	
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				feedList fed = new feedList();
+				fed.setTilte(rs.getString(3));
+				fed.setWriter(rs.getString(2));
+				fed.setDate(rs.getString(5));
+				list.add(fed);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		
+		return list;	
+	}
+	
+	//커뮤니티 내용 가지고 오기
+	public  ArrayList<getfeed> getfeed(String title) throws SQLException{
+		DBConnection();
+		String sql = "SELECT * FROM 커뮤니티";
+		ArrayList<getfeed> list = new ArrayList<getfeed>();
+	
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			System.out.println(title + "응 안들어가");
+			while(rs.next()) {
+				System.out.println(rs.getString(3) + "111");
+				if(title.equals(rs.getString(3).trim())) {
+				getfeed fed = new getfeed();
+				System.out.println(rs.getString(3) + "뭐가 들어갔게요");
+				fed.setTilte(rs.getString(3));
+				fed.setContentbox(rs.getString(4));
+				list.add(fed);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		
+		return list;	
+	}
+	//댓글 DB에 값 삽입
+	public int comment_insert(comment comment, String title, String userid) throws SQLException {
+		DBConnection();
+		int result = 0;
+		
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		int number = getNumber(title);
+
+		int comment_number = CommentNumber() + 1;
+		System.out.println(title + "이건 뭐게요");
+		
+		LocalDate now = LocalDate.now();
+		String date = String.valueOf(now);
+		
+		PreparedStatement pstmt = null;
+			
+		try {
+			String sql = "insert into 댓글 values(?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, comment_number);
+			pstmt.setString(2, comment.getComment());
+			pstmt.setString(3, userid);
+			pstmt.setString(4, date);
+			pstmt.setInt(5, number);
+
+			result = pstmt.executeUpdate();
+			
+		}
+		catch(SQLException e){
+			System.out.println("댓글 삽입 오류");
+	        System.err.println (e.getMessage());
+		}
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	//댓글 개인키 가지고 오기
+	public int CommentNumber() throws SQLException {
+		DBConnection();
+		int comment_number = 0;
+		String sql = "SELECT * FROM 댓글";
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				comment_number = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		return comment_number;
+	}
+	
+	//댓글 내용 가지고 오기
+	public  ArrayList<comment_Con> GetComment(String title) throws SQLException{
+		DBConnection();
+		int result = 0;
+		ArrayList<comment_Con> list = new ArrayList<comment_Con>();
+		
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		int number = getNumber(title);
+		String sql = "SELECT * FROM 댓글";
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				if(rs.getInt(5) == number) {
+					comment_Con con = new comment_Con();
+					con.setWriter(rs.getString(3));
+					con.setContent(rs.getString(2));
+					con.setDate(rs.getString(4));
+					list.add(con);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		
+		return list;	
+	}
+	
+	//커뮤니티 숫자 가져오는 디비
+	public int getNumber(String title) throws SQLException {
+		DBConnection();
+		String sql = "SELECT * FROM 커뮤니티";
+		int number = 0;
+		
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				if(title.equals(rs.getString(3))) {
+					number = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		stmt.close();
+		return number;
+	}
+
+	//회원정보 가지고 오기
+		public  String [] getUserInformation(String UserId) throws SQLException{
+			DBConnection();
+			String sql = "SELECT * FROM 회원";
+			String UserInformation[] = new String[7];
+		
+			ResultSet rs = null;
+			Statement stmt = null;
+			
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				System.out.println(UserId);
+				while(rs.next()) {
+					if(UserId.equals(rs.getString(1))){
+						UserInformation[0] = rs.getString(1);
+						UserInformation[1] = rs.getString(2);
+						UserInformation[2] = rs.getString(3);
+						UserInformation[3] = rs.getString(4);
+						UserInformation[4] = rs.getString(5);
+						UserInformation[5] = rs.getString(6);
+						UserInformation[6] = rs.getString(7);
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rs.close();
+			stmt.close();
+			
+			return UserInformation;	
+		}
+		
+		//포폴값 삽입
+		public int inputMypage(Mypageinput mypage, String UserId) throws SQLException {
+			DBConnection();
+			int result = 0;
+			String sql;
+			
+			PreparedStatement pstmt = null;
+			String price = "";
+			String intro = "";
+			String certificate = "";
+			if(mypage.getPrice() == null) {
+				price = "";
+			}
+			else {
+				price = mypage.getPrice();
+			}
+			if(mypage.getCertificate() == null) {
+				certificate = "";
+			}
+			else {
+				certificate = mypage.getCertificate();
+			}
+			if(mypage.getIntro() == null) {
+				intro = "";
+			}
+			else {
+				intro = mypage.getIntro();
+			}
+			try {
+				sql = "UPDATE 포트폴리오 SET 수상경력 = ?, 취득자격증 = ?, 자기소개서 = ?  WHERE 소지자 = (SELECT 회원아이디 FROM 회원 WHERE 회원아이디 = ?)";
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, price);
+				pstmt.setString(2, certificate);
+				pstmt.setString(3, intro);
+				pstmt.setString(4, UserId);
+
+				result = pstmt.executeUpdate();
+				
+			}
+			catch(SQLException e){
+				System.out.println("포트폴리오 갱신 오류");
+		        System.err.println (e.getMessage());
+			}
+			
+			pstmt.close();
+			conn.close();
+			return result;
+		}
+		
+		//포폴 값 받아오기
+		public  String [] getInformation(String UserId) throws SQLException{
+			DBConnection();
+			String sql = "SELECT * FROM 포트폴리오";
+			String Information[] = new String[3];
+		
+			ResultSet rs = null;
+			Statement stmt = null;
+			
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				System.out.println(UserId);
+				while(rs.next()) {
+					if(UserId.equals(rs.getString(5))){
+						Information[0] = rs.getString(4);
+						Information[1] = rs.getString(3);
+						Information[2] = rs.getString(2);
+					}
+					else {
+						Information[0] = "";
+						Information[1] = "";
+						Information[2] = "";
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rs.close();
+			stmt.close();
+			
+			return Information;	
+		}
+		//추천 프로시저 호출
+		public void callgood(int comId) throws SQLException{
+			DBConnection();
+			System.out.println("추천했다!");
+			String sql = "CALL 추천추가(?)";
+			CallableStatement cstmt = null;
+			try {
+				cstmt = conn.prepareCall(sql);
+				cstmt.setInt(1, comId);
+				cstmt.execute();
+			}catch(SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			cstmt.close();
+			conn.close();
+		}
+		
+		//커뮤니티 top5 뽑아내는 기능
+		public String [] best5() throws SQLException {
+			DBConnection();
+			String best[] = new String[5];
+			int n = 0;
+			String sql = "SELECT * FROM 커뮤니티 ORDER BY 추천수 DESC";
+			ResultSet rs = null;
+			Statement stmt = null;
+			
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				for(int i = 0; i <5; i++) {
+					best[i] = "-";
+				}
+				while(rs.next()) {
+					best[n] = rs.getString(3);
+					n++;
+				}
+				if(n == 1) {
+					best[1] = "-"; best[2] = "-"; best[3] = "-"; best[4] = "-";
+				}
+				else if(n == 2) {
+					best[2] = "-"; best[3] = "-"; best[4] = "-";
+				}
+				else if(n == 3) {
+					best[3] = "-"; best[4] = "-";
+				}
+				else if(n == 4) {
+					best[4] = "-";
+				}
+				System.out.println(best[0] + best[1] + best[2] + best[3] + "best5 출력위치임");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rs.close();
+			stmt.close();
+			return best;
+		}
+		
+		public String [] cartification(String title) throws SQLException {
+			System.out.println(title + "값이 갔네!");
+			String [] cartification = new String[5];
+			DBConnection();
+			String sql = "SELECT * FROM 자격증";
+		
+			ResultSet rs = null;
+			Statement stmt = null;
+			
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					if(title.equals(rs.getString(2))) {
+						cartification[0] = rs.getString(2);
+						cartification[1] = rs.getString(3);
+						cartification[2] = rs.getString(4);
+						cartification[3] = rs.getString(5);
+						cartification[4] = rs.getString(6);
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rs.close();
+			stmt.close();
+			
+			return cartification;	
+		}
+		
+}

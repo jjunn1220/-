@@ -1,0 +1,175 @@
+body{
+    background-color : white;
+}
+
+a{
+  text-decoration: none !important;
+  color:#7c5214 !important;
+}
+
+#wrapper {
+    position :relative;
+    margin:auto;
+    width: 1000px;
+    flex-direction: column;
+}
+
+#main_row1{
+    display :flex;
+    flex-direction :row;
+    flex-basis : auto;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+    .logo{
+        position:relative;
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        margin-left:10%;
+        margin-right: 3%;
+    }
+
+    .search {
+        position: relative;
+    }
+
+        .input {
+            position: relative;
+            width: 400px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 5%;
+            font-size: 14px;
+        }
+
+        .searchpic {
+            position : absolute;
+            width: 3%;
+            right: 3%;
+            margin-top:8%
+        }
+
+    .main_btn{
+      margin:auto;
+    }
+    .login_btn{
+      text-align:center;
+      margin:auto;
+      background-color: white;
+      color:#7c5214;
+      border-radius:5px !important;
+      border:1px solid #7c5214 !important;
+      font-size:1em;
+    }
+
+
+.bg-white{
+	margin-bottom: 1em;
+	border-bottom: solid 1px #74613F;
+}
+
+
+.navbar-nav > li{
+	text-align: center;
+	width:33%;
+}
+
+/* 여어어어ㅓㅇ기이이이ㅣ이까지 상다아아아아안바ㅏ아아아아ㅏ아ㅏㅏㅏㅏ아ㅏ아앙*/
+
+.card-img-top{
+	height: 8rem;
+	object-fit: cover;
+}
+
+.card-title{
+	color:#74613F;
+	font-weight:bold;
+	font-size:medium;
+	padding-bottom:10px;
+}
+
+.card-text{
+	color:#74613F;
+	font-size:small;
+	line-height:5px;
+}
+
+
+      .swiper-slide {
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        resize:none;
+      }
+
+      .swiper {
+        width: 100%;
+        height: fit-content;
+        margin: 20px auto;
+        text-align: center;
+      }
+
+      .swiper-wrapper{
+        height: 300px;
+      }
+
+/*min-width 어찌 해결하는데....*/
+
+#list_body{
+  width:200px;
+}
+#list_title{
+	color:#74613F;
+	font-weight:bold;
+	font-size:large;
+}
+
+#list_text{
+  text-decoration: none;
+}
+
+.swiper > li{
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swiper > li > a {
+  text-decoration-line: none;
+  color: black;
+}
+.logo_box{
+    width:30%;
+}
+    .logo img{
+        width:140px;
+        height: 80px;
+        border:0 white;
+        padding:0;
+        overflow:hidden;
+        position:relative;
+    }
+
+    .logo{
+        display:flex;
+        width:140px;
+        height: 80px;
+        position:relative;
+        border:white;
+        margin:auto;
+        background-color: white;
+    }

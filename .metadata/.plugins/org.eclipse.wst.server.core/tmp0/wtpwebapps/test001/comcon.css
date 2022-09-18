@@ -1,0 +1,220 @@
+body{
+    background-color : white;
+}
+
+a{
+  text-decoration: none !important;
+  color:#7c5214 !important;
+}
+
+#wrapper {
+    position :relative;
+    margin:auto;
+    width: 1000px;
+    flex-direction: column;
+}
+
+#main_row1{
+    display :flex;
+    flex-direction :row;
+    flex-basis : auto;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+    .logo{
+        position:relative;
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        margin-left:10%;
+        margin-right: 3%;
+    }
+
+    .search {
+        position: relative;
+    }
+
+        .input {
+            position: relative;
+            width: 400px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 5%;
+            font-size: 14px;
+        }
+
+        .searchpic {
+            position : absolute;
+            width: 3%;
+            right: 3%;
+            margin-top:8%
+        }
+
+    .main_btn{
+      margin:auto;
+    }
+    .login_btn{
+      text-align:center;
+      margin:auto;
+      background-color: white;
+      color:#7c5214;
+      border-radius:5px !important;
+      border:1px solid #7c5214 !important;
+      font-size:1em;
+    }
+
+
+.bg-white{
+	margin-bottom: 1em;
+	border-bottom: solid 1px #74613F;
+}
+
+
+.navbar-nav > li{
+	text-align: center;
+	width:33%;
+}
+
+    .uploadbox{
+        width:800px;
+        height: 450px;
+        border: 1px solid #ccc;
+        margin: 0 auto;
+		margin-top:3em;
+        padding:25px 15px;
+        box-sizing: border-box;
+    }
+    
+    .uploadbox h1{
+        width:100%;
+        height: 40px;
+        font-size: 28px;
+        color:#7c5214;
+        border-bottom: 1px solid #5c3a07;
+        padding-left:40px;
+        box-sizing: border-box;
+    
+    }
+
+    #title{
+        width: 300px;
+        height: 25px;
+        border: 1px solid #999;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+    
+    #contentbox{
+        border: 1px solid #999;
+        box-sizing: border-box;
+        resize:none;
+    }
+    
+    .btnwrap{
+        width: 100%;
+        text-align: center;
+    }
+    .btnwrap label{
+        position: absolute;
+        left: -999em;
+    }
+    .btnwrap a{
+        width: 129px;
+        height: 35px;
+        background-color: rgb(255, 255, 255);
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 3px;
+        color: rgba(0, 0, 0, 0.705);
+        font-size: 12px;
+        line-height: 35px;
+    }
+    #uploadbtn{
+    
+        width:129px;
+        height: 35px;
+        border: none;
+        background-color: #7c5214;
+        border-radius: 3px;
+        color:#fff;
+        font-size: 14px;
+        font-weight: bold;
+        position: relative;
+        top: 100px;
+        right: 5px;
+    }
+
+textarea{
+	resize:none;
+}    
+
+
+
+ .commnetbox{
+        font-size: 20px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-top:3em;
+    }
+    
+    .commentbox h1{
+    	right: 500px;
+        width: 850px;
+        height: 40px;
+        font-size: 28px;
+        color:#7c5214;
+        margin-left: 100px;
+        padding-right: 100px;
+        box-sizing: border-box;
+    }
+    
+        #commentbtn{
+        bottom : 60px;
+    	left: 800px;
+        width:129px;
+        height: 35px;
+        border: none;
+        background-color: #7c5214;
+        border-radius: 3px;
+        color:#fff;
+        font-size: 14px;
+        font-weight: bold;
+        position: relative;
+    }
+    
+    #recombtn{
+    display:block;
+    width:129px;
+    height: 35px;
+    margin:auto;
+    border: none;
+    background-color: #7c5214;
+    border-radius: 3px;
+    color:#fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logo_box{
+    width:30%;
+}
+    .logo img{
+        width:140px;
+        height: 80px;
+        border:0 white;
+        padding:0;
+        overflow:hidden;
+        position:relative;
+    }
+
+    .logo{
+        display:flex;
+        width:140px;
+        height: 80px;
+        position:relative;
+        border:white;
+        margin:auto;
+        background-color: white;
+    }

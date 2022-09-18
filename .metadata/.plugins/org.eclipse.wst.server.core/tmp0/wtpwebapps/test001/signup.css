@@ -1,0 +1,169 @@
+body{
+    background-color : white;
+}
+
+a{
+  text-decoration: none !important;
+  color:#7c5214 !important;
+}
+
+#wrapper {
+    position :relative;
+    margin:auto;
+    width: 1000px;
+    flex-direction: column;
+}
+
+#main_row1{
+    display :flex;
+    flex-direction :row;
+    flex-basis : auto;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+    .logo{
+        position:relative;
+        width: 15%;
+        height: 15%;
+        object-fit: cover;
+        margin-left:10%;
+        margin-right: 3%;
+    }
+
+    .search {
+        position: relative;
+    }
+
+        .input {
+            position: relative;
+            width: 400px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 5%;
+            font-size: 14px;
+        }
+
+        .searchpic {
+            position : absolute;
+            width: 3%;
+            right: 3%;
+            margin-top:8%
+        }
+
+    .main_btn{
+      margin:auto;
+    }
+    .login_btn{
+      text-align:center;
+      margin:auto;
+      background-color: white;
+      color:#7c5214;
+      border-radius:5px !important;
+      border:1px solid #7c5214 !important;
+      font-size:1em;
+    }
+
+
+.bg-white{
+	margin-bottom: 1em;
+	border-bottom: solid 1px #74613F;
+}
+
+
+.navbar-nav > li{
+	text-align: center;
+	width:33%;
+}
+
+
+/*----------------고정-----------------*/
+
+input[type=password], input[type=email] {
+	width:30%; 
+}
+
+.inputtext{
+    width:30%;
+}
+
+
+input[type=number] {
+	width: 10%;
+}
+
+input[type=tel]  {
+	width: 10%;
+}
+
+
+table {
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
+}
+
+input {
+	width: 30%;
+	padding: 6px;
+	border-radius: 4px;
+	border: 2px solid #ccc;
+	margin-top: 33px;
+}
+
+
+.c1 {
+	display: inline-block;
+	width: 90%;
+	padding: 10px;
+	border-radius: 4px;
+	text-align: center;
+	background-color:  #7c5214;
+	color: aliceblue;
+}
+
+input[type=button] {
+	width: 100px;
+	padding: 7px 15px;
+	margin: 7px;
+	background-color: #5c3a07;
+	border: none;
+	color: white;
+	font-size: 1.0em;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+input[type=submit] {
+	width: 20%;
+	padding: 7px 15px;
+	margin: 7px;
+	background-color: #5c3a07;
+	border: none;
+	color: white;
+	font-size: 1.1em;
+	cursor: pointer;
+	border-radius: 4px;
+    margin-top:10px;
+}
+.logo_box{
+    width:30%;
+}
+    .logo img{
+        width:140px;
+        height: 80px;
+        border:0 white;
+        padding:0;
+        overflow:hidden;
+        position:relative;
+    }
+
+    .logo{
+        display:flex;
+        width:140px;
+        height: 80px;
+        position:relative;
+        border:white;
+        margin:auto;
+        background-color: white;
+    }

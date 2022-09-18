@@ -1,0 +1,13 @@
+1650003604509	Delete element
+1650005569541	Move 'mysql-connector-java-5.1.29-bin' to 'lib'
+1650005586114	Delete element
+1650005592454	Delete element
+1650005638306	Move 'main.css' to 'CSS'
+1650005640827	Move 'main.html' to 'HTML'
+1650005685822	Delete element
+1650005750959	Move 'mysql-connector-java-5.1.29-bin.jar' to 'lib'
+1650005898395	Move 'CSS' to 'webapp'
+1650005901455	Move 'HTML' to 'webapp'
+1650005905674	Move 'JSP' to 'webapp'
+1650006077699	Move 'lib' to 'webapp'
+1650006124106	Move 'lib' to 'WEB-INF'
